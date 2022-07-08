@@ -1,0 +1,193 @@
+
+  <!DOCTYPE html>
+  <html>
+
+  <head>
+    <title>Off Track</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script src="assets/js/sigma.min.js"></script>
+    <script src="assets/js/sigma.parsers.json.min.js"></script>
+    <script src="assets/js/sigma.pathfinding.astar.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="assets/js/renderers/sigma.renderers.canvas.js"></script>
+    <script src="assets/js/renderers/sigma.renderers.webgl.js"></script>
+    <script src="assets/js/renderers/sigma.renderers.svg.js"></script>
+    <script src="assets/js/renderers/sigma.renderers.def.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.labels.def.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.hovers.def.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.nodes.def.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.edges.def.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.edges.curve.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+    <script src="assets/js/renderers/canvas/sigma.canvas.extremities.def.js"></script>
+    <script src="assets/js/misc/sigma.misc.animation.js"></script>
+
+    <!-- PLUGIN CUSTOM SHAPES -->
+    <script src="assets/js/sigma.renderers.customShapes/shape-library.js"></script>
+    <script src="assets/js/sigma.renderers.customShapes/sigma.renderers.customShapes.js"></script>
+    <script src="assets/js/sigma.plugins.animate/sigma.plugins.animate.js"></script>
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="home-button"><a href="index.html">prepocalypse</a></div>
+      <div class="home-button" id="about">about</div>
+    </div>
+    <div class="aboutPage hide" id="aboutPage">
+      <p>Prepping is a philosophy, a movement born in the USA that aims to develop and implement strategies capable of
+        guaranteeing safety and comfort during emergency situations. The Prepper - literally "the one who prepares" or
+        "the one who is ready" - finds the main solutions to act in protecting himself and his family in case of some
+        doomsday scenarios.
+
+        The tools he uses are mainly sources of information, with updates on the riskiest events in his area. But also
+        knowledge in terms of survival, such as the techniques for preparing and organizing his own material. There are
+        essential items inside every kit of every Prepper. At the same time, everyone knows their personal needs and
+        strategies.</p>
+    </div>
+    <div id="wrapper">
+      <div id="network-container">
+        <div id="wrapper-side">
+          <div id="visualizer">
+            <h1 id="nameLabels">HASHTAG NAME</h1>
+            <h3 id="videosDate"></h3>
+            <h3 id="description"></h3>
+            <h3 id="videosNumber"></h3>
+            <ul id="hashtagsLabel"></ul>
+            <div id="wrapper-image"></div>
+          </div>
+        </div>
+        <div id="network-graph">
+          <div class="buttonGui" id="zoomIn">+</div>
+          <div class="buttonGui" id="zoomOut">–</div>
+          <div class="buttonGui" id="resetView">&#8634;</div>
+          <div class="buttonGui" id="info">?</div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="infoLabel">
+      <p class="info">
+        YOU CAN DIVE INTO THE MAP BY SCROLLING UP/DOWN OR THROUGH THE BOTTOMS ON
+        THE RIGHT. WHEN YOU CLICK ON AN ITEM YOU CAN DISCOVER MORE OF IT AND SEE
+        HOW IT IS LINKED TO ANOTHER EVENT. ON THE LEFT, CLICK ON RESET [ &#8634;
+        ] TO RETURN TO THE ENTIRE MAP.
+      </p>
+    </div> -->
+    <div class="nav-available-wrap">
+      <div class="nav-available-copy">
+        <span>
+          <span class="avail-item">IF YOUR WORLD ENDS TOMORROW, WOULD YOU BE READY?<span class="dot"></span>
+            |</span>
+        </span>
+        <span class="avail-item">LATEST NEWS: 26 OCTOBER 2016 AT 9:18 PM ZONE UMBRIA-MARCHE
+          MAGNITUDE SHOCK 5.9<span class="dot"> |</span>
+        </span>
+        <span class="avail-item">LATEST NEWS: 30 JULY 2021 IN SICILY PIANA DI CATANIA BURNS<span class="dot">
+            |</span>
+        </span>
+        </span>
+        <span>
+          <span class="avail-item">LATEST NEWS: FEBRUARY 2021 IN ITALY +81,000 UNEMPLOYED PER MONTH
+            RECORD RATE 59.6%<span class="dot"> |</span>
+          </span>
+          <span class="avail-item">LATEST NEWS: 13 JUNE 2022 THE RISK OF USING NUCLEAR ARMS SEEMS NOW
+            HIGHER THAN DURING THE COLD WAR<span class="dot"> |</span>
+          </span>
+          <span class="avail-item">LATEST NEWS: EMOTIONAL SUFFERING FOLLOWING A BREAK-UP IS ONE OF THE
+            MOST COMMON TRIGGERS OF PSYCHOLOGICAL DISORDERS<span class="dot">
+              |</span>
+          </span>
+          <span class="avail-item">LATEST NEWS: NASA ESTIMATES A 65% CHANCE THAT THIS HURRICANE SEASON
+            WILL BE ABNORMAL<span class="dot"> |</span>
+          </span>
+          <span class="avail-item">LATEST NEWS: 11 MARCH 2020 THE WORLD HEALTH ORGANIZATION OFFICIALLY
+            DECLARES THE STATE OF PANDEMIC DUE TO COVID-19<span class="dot">
+              |</span>
+          </span>
+          <span class="avail-item">LATEST NEWS: 14 JANUARY 2022 THE ARCHIPELAGO TONGA WAS HIT BY A
+            TSUNAMI TRIGGERED BY THE ERUPTION OF AN UNDERWATER VOLCANO<span class="dot">
+              |</span>
+          </span>
+          <span class="avail-item">LATEST NEWS: 1 FEBRUARY 2021 IN MYANMAR MIN AUNG HLAING TURNS THE
+            DEMOCRATIC GOVERNMENT INTO A MILITARY CONFLICT<span class="dot">
+              |</span></span>
+          <span class="avail-item">LATEST NEWS: 13 MARCH 2019 HISTORICAL BLACKOUT OF SOCIAL NETWORKS
+            FOR A TOTAL OF 14 HOURS<span class="dot"> |</span>
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div class="nav-available-info" id="info-wrap">
+      <div class="nav-available-copy">
+        <span>
+          <span class="avail-item"> YOU CAN DIVE INTO THE MAP BY SCROLLING UP/DOWN OR THROUGH THE BOTTOMS ON
+            THE RIGHT. WHEN YOU CLICK ON AN ITEM YOU CAN DISCOVER MORE OF IT AND SEE
+            HOW IT IS LINKED TO ANOTHER EVENT. ON THE LEFT, CLICK ON RESET [ &#8634;
+            ] TO RETURN TO THE ENTIRE MAP.<span class="dot">
+              |</span>
+          </span>
+          <span class="avail-item">YOU CAN DIVE INTO THE MAP BY SCROLLING UP/DOWN OR THROUGH THE BOTTOMS ON
+            THE RIGHT. WHEN YOU CLICK ON AN ITEM YOU CAN DISCOVER MORE OF IT AND SEE
+            HOW IT IS LINKED TO ANOTHER EVENT. ON THE LEFT, CLICK ON RESET [ &#8634;
+            ] TO RETURN TO THE ENTIRE MAP.<span class="dot"> |</span></span>
+          <span class="avail-item">YOU CAN DIVE INTO THE MAP BY SCROLLING UP/DOWN OR THROUGH THE BOTTOMS ON
+            THE RIGHT. WHEN YOU CLICK ON AN ITEM YOU CAN DISCOVER MORE OF IT AND SEE
+            HOW IT IS LINKED TO ANOTHER EVENT. ON THE LEFT, CLICK ON RESET [ &#8634;
+            ] TO RETURN TO THE ENTIRE MAP.<span class="dot"> |</span></span>
+        </span>
+        <span>
+          <span class="avail-item"> YOU CAN DIVE INTO THE MAP BY SCROLLING UP/DOWN OR THROUGH THE BOTTOMS ON
+            THE RIGHT. WHEN YOU CLICK ON AN ITEM YOU CAN DISCOVER MORE OF IT AND SEE
+            HOW IT IS LINKED TO ANOTHER EVENT. ON THE LEFT, CLICK ON RESET [ &#8634;
+            ] TO RETURN TO THE ENTIRE MAP.<span class="dot">
+              |</span>
+          </span>
+          <span class="avail-item">YOU CAN DIVE INTO THE MAP BY SCROLLING UP/DOWN OR THROUGH THE BOTTOMS ON
+            THE RIGHT. WHEN YOU CLICK ON AN ITEM YOU CAN DISCOVER MORE OF IT AND SEE
+            HOW IT IS LINKED TO ANOTHER EVENT. ON THE LEFT, CLICK ON RESET [ &#8634;
+            ] TO RETURN TO THE ENTIRE MAP.<span class="dot"> |</span></span>
+          <span class="avail-item">YOU CAN DIVE INTO THE MAP BY SCROLLING UP/DOWN OR THROUGH THE BOTTOMS ON
+            THE RIGHT. WHEN YOU CLICK ON AN ITEM YOU CAN DISCOVER MORE OF IT AND SEE
+            HOW IT IS LINKED TO ANOTHER EVENT. ON THE LEFT, CLICK ON RESET [ &#8634;
+            ] TO RETURN TO THE ENTIRE MAP.<span class="dot"> |</span></span>
+        </span>
+        <span>
+          <span class="avail-item"> YOU CAN DIVE INTO THE MAP BY SCROLLING UP/DOWN OR THROUGH THE BOTTOMS ON
+            THE RIGHT. WHEN YOU CLICK ON AN ITEM YOU CAN DISCOVER MORE OF IT AND SEE
+            HOW IT IS LINKED TO ANOTHER EVENT. ON THE LEFT, CLICK ON RESET [ &#8634;
+            ] TO RETURN TO THE ENTIRE MAP.<span class="dot">
+              |</span>
+          </span>
+          <span class="avail-item">YOU CAN DIVE INTO THE MAP BY SCROLLING UP/DOWN OR THROUGH THE BOTTOMS ON
+            THE RIGHT. WHEN YOU CLICK ON AN ITEM YOU CAN DISCOVER MORE OF IT AND SEE
+            HOW IT IS LINKED TO ANOTHER EVENT. ON THE LEFT, CLICK ON RESET [ &#8634;
+            ] TO RETURN TO THE ENTIRE MAP.<span class="dot"> |</span></span>
+          <span class="avail-item">YOU CAN DIVE INTO THE MAP BY SCROLLING UP/DOWN OR THROUGH THE BOTTOMS ON
+            THE RIGHT. WHEN YOU CLICK ON AN ITEM YOU CAN DISCOVER MORE OF IT AND SEE
+            HOW IT IS LINKED TO ANOTHER EVENT. ON THE LEFT, CLICK ON RESET [ &#8634;
+            ] TO RETURN TO THE ENTIRE MAP.<span class="dot"> |</span></span>
+        </span>
+
+
+      </div>
+    </div>
+    <script src="js/main.js"></script>
+    <script src="js/archive.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+  </body>
+
+  </html>
