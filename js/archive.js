@@ -405,7 +405,7 @@ function buildNetwork(s) {
         console.log(imagesArray);
         for (k = 1; k < 15; k++) {
           imagesArray[k - 1].src =
-            "../assets/data/images/" + e.data.node.label + "/" + k + ".jpg";
+            "preppers/assets/data/images/" + e.data.node.label + "/" + k + ".jpg";
         }
       } else {
         for (j = 1; j < 15; j++) {
@@ -414,7 +414,7 @@ function buildNetwork(s) {
           var dateImage = document.createElement("img");
           dateImage.className = "image";
           dateImage.src =
-            "../assets/data/images/" + e.data.node.label + "/" + j + ".jpg";
+            "preppers/assets/data/images/" + e.data.node.label + "/" + j + ".jpg";
           document.getElementById("wrapper-image").appendChild(dateImage);
         }
         checkImages = true;

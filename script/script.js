@@ -12,14 +12,15 @@ function startAnimation(t) {
 async function scroll(e) {
   e.preventDefault();
   scrolled += e.deltaY;
-  console.log(scrolled);
+  hideCta+=e.deltaY;
   if (scrolled > 2000) {
     scrolled = 0;
+    console.log();
     for (i = 0; i < sects.length; i++) {
       console.log(sects[i].classList);
       if (sects[i].classList.contains("active")) {
         revealed = i;
-        if (i == sects.length - 1) {
+        if (hideCta >= 7000) {
           document.querySelector(".bottom").style.opacity = "0";
         }
       }
@@ -32,6 +33,7 @@ async function scroll(e) {
 
 let scrolled = 0;
 let revealed = 0;
+let hideCta = 0;
 const el = document.querySelector(".text-wrapper");
 const sects = document.querySelectorAll("section");
 
